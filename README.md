@@ -14,8 +14,11 @@ DevBoard is a PHP library to help developers to track some informations.
 
 ## Contributing
 
+PHP:
 Your contribution must follow the PSR-12 standard https://www.php-fig.org/psr/psr-12/
 and the PSR-4 standard https://www.php-fig.org/psr/psr-4/
+
+React:
 
 ### Commit Style
 ```
