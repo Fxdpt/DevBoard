@@ -1,0 +1,23 @@
+{
+    "name": "fxdpt/devboard",
+    "description": "development dashboard",
+    "type": "library",
+    "require-dev": {
+        "symfony/var-dumper": "^5.0",
+        "phpstan/phpstan": "^0.12.18"
+    },
+    "authors": [
+        {
+            "name": "Fxdpt"
+        }
+    ],
+    "scripts": {
+        "stan-sniff": "phpstan analyse"
+    },
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
