@@ -32,7 +32,7 @@ class PDODevboardStatement extends PDOStatement
         return parent::bindParam($parameter, $variable, $data_type, $length, $driver_options);
     }
 
-    public function execute($input_parameters = null)
+    public function execute($input_parameters = null) : bool
     {
         $startTime = microtime(true);
         $isCorrectlyExecuted = parent::execute($input_parameters);

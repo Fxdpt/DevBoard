@@ -2,13 +2,13 @@
 
 namespace App\Database\Collector;
 
-use App\Database\Adapter\PDOConnection;
+use App\Database\Adapter\PDODevboardConnection;
 
 class PDOQueryCollector
 {
     private $statements = [];
 
-    public function __construct(PDOConnection $pdoConnection)
+    public function __construct(PDODevboardConnection $pdoConnection)
     {
         $this->statements = $pdoConnection->getStatements();
     }
