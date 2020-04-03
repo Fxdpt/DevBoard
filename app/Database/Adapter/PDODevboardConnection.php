@@ -5,7 +5,7 @@ namespace App\Database\Adapter;
 use PDO;
 use PDOStatement;
 
-class PDOConnection extends PDO
+class PDODevboardConnection extends PDO
 {
     private $statements = [];
 
