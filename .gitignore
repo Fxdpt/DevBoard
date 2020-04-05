@@ -1,3 +1,4 @@
 /vendor
 phpstan.neon
 composer.lock
+.env.local

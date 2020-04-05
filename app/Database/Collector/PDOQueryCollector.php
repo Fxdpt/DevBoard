@@ -3,14 +3,17 @@
 namespace App\Database\Collector;
 
 use App\Database\Adapter\PDODevboardConnection;
+use App\Database\Logger\PDOLogger;
 
 class PDOQueryCollector
 {
     private $statements = [];
+    private $logger;
 
     public function __construct(PDODevboardConnection $pdoConnection)
     {
         $this->statements = $pdoConnection->getStatements();
+        $this->logger = new PDOLogger();
     }
 
     public function getQueriesData()
@@ -24,5 +27,7 @@ class PDOQueryCollector
                 'params' => $query->getParams(),
             ];
         }
+        $this->logger->addToLogFile($queriesData);
+        return $queriesData;
     }
 }
