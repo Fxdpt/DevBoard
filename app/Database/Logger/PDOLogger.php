@@ -21,18 +21,23 @@ class PDOLogger implements LoggerInterface
 
         foreach ($collectedData as $queryInfo) {
             $queryData = '';
-            foreach ($queryInfo as $index => $params) {
-                if($index === 'duration') {
-                    $queryData .= "$params ms - ";
-                }elseif (gettype($params) == 'array') {
-                    foreach ($params as $bindedParam => $value) {
-                        $queryData .= "$bindedParam : $value - ";
+            if (gettype($queryInfo) === "array") {
+                foreach ($queryInfo as $index => $params) {
+                    if($index === 'duration') {
+                        $queryData .= "$params ms - ";
+                    }elseif (gettype($params) == 'array') {
+                        foreach ($params as $bindedParam => $value) {
+                            $queryData .= "$bindedParam : $value - ";
+                        }
+                    } else {
+                        $queryData .= "$params - ";
                     }
-                } else {
-                    $queryData .= "$params - ";
                 }
+                $formatedData[] = "[ $readableTime ] DBRequest: $queryData \n";
+            } else {
+                $queryData .= "$queryInfo";
+                $formatedData[] = "[ $readableTime ] Exception: $queryData \n";
             }
-            $formatedData[] = "[ $readableTime ] DBRequest: $queryData \n";
         }
         return $formatedData;
     }

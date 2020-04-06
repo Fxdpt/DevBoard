@@ -3,6 +3,7 @@
 namespace App\Database\Adapter;
 
 use PDO;
+use PDOException;
 use PDOStatement;
 
 class PDODevboardConnection extends PDO
@@ -18,8 +19,12 @@ class PDODevboardConnection extends PDO
         int $port = 3306
     ) {
         $dsn = "mysql:dbname={$basename};host={$host};port={$port}";
-        parent::__construct($dsn, $username, $password, $options);
-        $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['\App\Database\Adapter\PDODevboardStatement']);
+        try {
+            parent::__construct($dsn, $username, $password, $options);
+            $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['\App\Database\Adapter\PDODevboardStatement']);
+        } catch (PDOException $e) {
+            throw new PDODevboardException($e);
+        }
     }
 
     public function getStatements(): array
