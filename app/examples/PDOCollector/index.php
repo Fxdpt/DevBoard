@@ -8,7 +8,7 @@ require __DIR__ . '/../../../vendor/autoload.php';
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/../../.env.local');
 
-$dbh = new PDODevboardConnection('localhost', 'musicourplanner', 'root', '');
+$dbh = new PDODevboardConnection('localhost', 'musictourplanner', 'root', '');
 
 $stmt = "SELECT * FROM band WHERE id < 50";
 $query = $dbh->prepare($stmt);

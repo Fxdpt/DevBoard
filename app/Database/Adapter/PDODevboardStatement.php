@@ -3,7 +3,9 @@
 namespace App\Database\Adapter;
 
 use PDO;
+use PDOException;
 use PDOStatement;
+use App\Database\Adapter\PDODevboardException;
 
 class PDODevboardStatement extends PDOStatement
 {
@@ -35,7 +37,12 @@ class PDODevboardStatement extends PDOStatement
     public function execute($input_parameters = null) : bool
     {
         $startTime = microtime(true);
-        $isCorrectlyExecuted = parent::execute($input_parameters);
+        try{
+            $isCorrectlyExecuted = parent::execute($input_parameters);
+        } catch (PDOException $e) {
+            throw new PDODevboardException($e);
+        }
+
         $endTime = microtime(true);
         $this->execTime = round(($endTime - $startTime) * 1000, 2);
         return $isCorrectlyExecuted;

@@ -5,6 +5,7 @@ namespace App\Database\Adapter;
 use PDO;
 use PDOException;
 use PDOStatement;
+use App\Database\Adapter\PDODevboardException;
 
 class PDODevboardConnection extends PDO
 {
@@ -34,7 +35,12 @@ class PDODevboardConnection extends PDO
 
     public function prepare($statement, $options = []): PDOStatement
     {
-        $currentStatement = parent::prepare($statement, $options);
+        try {
+            $currentStatement = parent::prepare($statement, $options);
+        } catch (PDOException $e) {
+            throw new PDODevboardException($e);
+        }
+
         $this->statements[] = $currentStatement;
         return $currentStatement;
     }
