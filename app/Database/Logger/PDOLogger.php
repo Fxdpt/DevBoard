@@ -2,10 +2,10 @@
 
 namespace App\Database\Logger;
 
-use App\Database\Interfaces\LoggerInterface;
+use App\Logger\BaseLogger;
 use DateTime;
 
-class PDOLogger implements LoggerInterface
+class PDOLogger extends BaseLogger
 {
     /**
      * Format the incoming array as a string
@@ -55,24 +55,6 @@ class PDOLogger implements LoggerInterface
                 return false;
             }
         }
-        return true;
-    }
-
-    /**
-     * Method call by the Collector to gather data and wrote it
-     *
-     * @param array $collectedData
-     * @return boolean
-     */
-    public function addToLogFile(array $collectedData): bool
-    {
-        $formattedLog = $this->formatLog($collectedData);
-        $logIsWrited = $this->WriteLog($formattedLog);
-
-        if ($logIsWrited === false) {
-            return $logIsWrited;
-        }
-
         return true;
     }
 }
