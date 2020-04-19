@@ -6,43 +6,28 @@ use App\HTTPRequest\Logger\HTTPLogger;
 
 class HTTPCollector
 {
-    private $httpRequest;
-    private $cookies;
-    private $request;
+    private $logger;
 
     public function __construct()
     {
-        $this->httpRequest = $_SERVER;
-        $this->cookie = $_COOKIE;
-        $this->request = $_REQUEST;
-    }
-
-    public function getHttpRequest() : array
-    {
-        return $this->httpRequest;
-    }
-
-    public function getCookies() : ?array
-    {
-        return $this->cookies;
-    }
-
-    public function getRequest() : array
-    {
-        return $this->request;
+        $this->logger = new HTTPLogger();
     }
 
     public function getAllRequestData() : array
     {
+        $clientIp = $_SERVER['REMOTE_ADDR'];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $statusCode = http_response_code();
+
         $requestData = [
-            'HTTP Request' => $this->httpRequest,
-            'Cookies' => $this->cookies,
-            'Request params' => $this->request
+            'client_ip' => $clientIp,
+            'method' => $requestMethod,
+            'uri' => $requestUri,
+            'status' => $statusCode,
         ];
 
-        $logger = new HTTPLogger();
-        $logger->addToLogFile($requestData);
-
+        $this->logger->addToLogFile($requestData);
         return $requestData;
     }
 }

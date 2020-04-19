@@ -4,9 +4,9 @@ namespace App\Logger\Interfaces;
 
 interface LoggerInterface
 {
-    function FormatLog(array $collectedData);
+    function FormatLog($collectedData);
 
-    function WriteLog(array $formatedData);
+    function WriteLog($formatedData);
 
-    function addToLogFile(array $collectedData);
+    function addToLogFile($collectedData);
 }

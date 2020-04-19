@@ -8,32 +8,21 @@ use DateTime;
 class HTTPLogger extends BaseLogger
 {
 
-    public function FormatLog(array $collectedData) : array
+    public function FormatLog($collectedData): string
     {
         $time = new DateTime();
         $readableTime = $time->format('d M Y H:i:s');
-        $formatedData = [];
+        $logLine = "[$readableTime] {$collectedData['client_ip']} [{$collectedData['status']}] {$collectedData['method']} {$collectedData['uri']}";
 
-        foreach($collectedData as $requestData) {
-            if ($requestData !== null) {
-                foreach ($requestData as $index => $value) {
-                    $formatedData[] = "[ $readableTime ] $index: $value \n";
-                }
-            }
-        }
-
-        return $formatedData;
+        return $logLine;
     }
 
-    public function WriteLog(array $formatedData) : bool
+    public function WriteLog($logLine): bool
     {
-
-        foreach ($formatedData as $logline) {
-            if (file_put_contents(__DIR__ . '/../../' . $_ENV['LOG_PATH_HTTP'] . '/http.log', $logline, FILE_APPEND | LOCK_EX) === false) {
-                return false;
-            }
+        if (file_put_contents(__DIR__ . '/../../' . $_ENV['LOG_PATH_HTTP'] . '/http.log', $logLine, FILE_APPEND | LOCK_EX) === false) {
+            return false;
         }
+
         return true;
     }
-
 }
