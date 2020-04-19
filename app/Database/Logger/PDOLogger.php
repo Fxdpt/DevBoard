@@ -13,7 +13,7 @@ class PDOLogger extends BaseLogger
      * @param array $collectedData
      * @return array
      */
-    public function formatLog(array $collectedData): array
+    public function formatLog($collectedData): array
     {
         $time = new DateTime();
         $readableTime = $time->format('d M Y H:i:s');
@@ -48,7 +48,7 @@ class PDOLogger extends BaseLogger
      * @param array $log
      * @return bool
      */
-    public function WriteLog(array $log) : bool
+    public function WriteLog($log) : bool
     {
         foreach ($log as $logline) {
             if (file_put_contents(__DIR__ . '/../../' . $_ENV['LOG_PATH_PDO'] . '/pdo.log', $logline, FILE_APPEND | LOCK_EX) === false) {
